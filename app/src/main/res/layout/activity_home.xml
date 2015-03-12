@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+    <TabHost
+            android:id="@+id/tabHost"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+
+        <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            <LinearLayout
+                    android:id="@+id/tablayout"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:background="@color/white"
+                    android:weightSum="5"
+                    android:layout_height="wrap_content">
+
+
+                <TextView
+                        android:id="@+id/event"
+                        android:text="日程"
+                        style="@style/tab_text"
+                        />
+
+
+                <TextView
+                        android:id="@+id/price"
+                        android:text="报价"
+                        style="@style/tab_text"
+                        />
+
+                <TextView
+                        android:id="@+id/pass"
+                        android:text="审批"
+                        style="@style/tab_text"
+                        />
+
+                <TextView
+                        android:id="@+id/work"
+                        android:text="作业"
+                        style="@style/tab_text"
+                        />
+
+                <TextView
+                        android:id="@+id/other"
+                        android:text="其它"
+                        style="@style/tab_text"
+                        ></TextView>
+
+
+
+            </LinearLayout>
+
+            <FrameLayout
+                    android:layout_above="@id/tablayout"
+                    android:id="@android:id/tabcontent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <fragment
+                        android:id="@+id/eventFragment"
+                        class="com.engine.dzapp.fragment.EventFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        ></fragment>
+
+                <fragment
+                        android:id="@+id/priceFragment"
+                        class="com.engine.dzapp.fragment.PriceFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"></fragment>
+
+                <fragment
+                        android:id="@+id/passFragment"
+                        class="com.engine.dzapp.fragment.PassFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"></fragment>
+
+                <fragment
+                        android:id="@+id/workFragment"
+                        class="com.engine.dzapp.fragment.WorkFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"></fragment>
+                <fragment
+                        android:id="@+id/otherFragment"
+                        class="com.engine.dzapp.fragment.OtherFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"></fragment>
+            </FrameLayout>
+
+        </RelativeLayout>
+
+        <TabWidget
+                android:visibility="gone"
+                android:id="@android:id/tabs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></TabWidget>
+    </TabHost>
+
+</RelativeLayout>
