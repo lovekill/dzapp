@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import com.engine.dzapp.R;
 import com.squareup.timessquare.CalendarPickerView;
 
@@ -56,6 +57,11 @@ public class EventFragment extends BaseFragment implements CalendarPickerView.On
 
     @Override
     public void onDateSelected(Date date) {
+
+    }
+
+    @OnClick(R.id.add)
+    public void addEvent(View view){
 
     }
 

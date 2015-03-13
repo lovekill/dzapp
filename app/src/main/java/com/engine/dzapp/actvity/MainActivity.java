@@ -44,6 +44,7 @@ public class MainActivity extends BaseActivity {
         tabHost.addTab(tabHost.newTabSpec("").setIndicator("").setContent(R.id.passFragment));
         tabHost.addTab(tabHost.newTabSpec("").setIndicator("").setContent(R.id.workFragment));
         tabHost.addTab(tabHost.newTabSpec("").setIndicator("").setContent(R.id.otherFragment));
+        event.setSelected(true);
     }
 
 
