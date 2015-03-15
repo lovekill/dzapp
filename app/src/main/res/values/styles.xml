@@ -1,8 +1,11 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme">
-        <!-- Customize your theme here. -->
+
+    <style name="titleText">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.engine.dzapp.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import butterknife.ButterKnife;
+import com.engine.dzapp.actvity.BaseActivity;
 import com.engine.dzapp.util.LOGUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -52,7 +54,9 @@ public abstract class BaseFragment extends Fragment {
         }
         return view;
     }
-
+    public void startActivity(Intent intent){
+        getActivity().startActivity(intent);
+    }
     @Override
     public void onResume() {
         super.onResume();
@@ -67,6 +71,7 @@ public abstract class BaseFragment extends Fragment {
 
 
     public void goBack() {
+        ((BaseActivity)getActivity()).onBackPressed();
     }
 
     @Override
