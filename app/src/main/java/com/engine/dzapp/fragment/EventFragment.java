@@ -11,10 +11,7 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-<<<<<<< HEAD
-=======
 import com.engine.dzapp.DaoManager;
->>>>>>> 3e19fb1da616098afd874e119ed98becb65e447c
 import com.engine.dzapp.R;
 import com.engine.dzapp.actvity.AddEventActivity;
 import com.engine.dzapp.adapter.EventAdapter;
