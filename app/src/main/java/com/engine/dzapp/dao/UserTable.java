@@ -8,7 +8,8 @@ public class UserTable {
 
     private String userName;
     private String password;
-    private Long time;
+    private String gespassword;
+    private java.util.Date loginTime;
 
     public UserTable() {
     }
@@ -17,10 +18,11 @@ public class UserTable {
         this.userName = userName;
     }
 
-    public UserTable(String userName, String password, Long time) {
+    public UserTable(String userName, String password, String gespassword, java.util.Date loginTime) {
         this.userName = userName;
         this.password = password;
-        this.time = time;
+        this.gespassword = gespassword;
+        this.loginTime = loginTime;
     }
 
     public String getUserName() {
@@ -39,12 +41,20 @@ public class UserTable {
         this.password = password;
     }
 
-    public Long getTime() {
-        return time;
+    public String getGespassword() {
+        return gespassword;
     }
 
-    public void setTime(Long time) {
-        this.time = time;
+    public void setGespassword(String gespassword) {
+        this.gespassword = gespassword;
+    }
+
+    public java.util.Date getLoginTime() {
+        return loginTime;
+    }
+
+    public void setLoginTime(java.util.Date loginTime) {
+        this.loginTime = loginTime;
     }
 
 }

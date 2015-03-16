@@ -1,7 +1,6 @@
 package com.engine.dzapp.actvity;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -20,16 +19,23 @@ public class BaseActivity extends FragmentActivity {
 
     }
 
-    public void addFragment(BaseFragment f, int id, boolean isAddToBackStack) {
-        String tag = f.getClass().getSimpleName();
-        if (baseFragmentManager.findFragmentByTag(tag) == null) {
-            final FragmentTransaction ft = baseFragmentManager.beginTransaction();
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            ft.add(id, f, tag);
+    public void addFragment(BaseFragment f, boolean isAddToBackStack) {
+        if (getSupportFragmentManager().findFragmentByTag(f.toString()) == null) {
+            final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.add(android.R.id.content, f);
             if (isAddToBackStack) {
-                ft.addToBackStack(tag);
+                ft.addToBackStack(f.toString());
             }
             ft.commit();
+        }
+
+    }
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+            getSupportFragmentManager().popBackStack();
+        } else {
+            finish();
         }
     }
 

@@ -3,13 +3,18 @@ package com.engine.dzapp.actvity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import com.engine.dzapp.DaoManager;
 import com.engine.dzapp.R;
+import com.engine.dzapp.dao.UserTable;
+import com.engine.dzapp.dao.UserTableDao;
 import com.engine.dzapp.view.GestureLockViewGroup;
 import com.engine.dzapp.view.GestureLockViewGroup.OnGestureLockViewListener;
 
@@ -21,17 +26,36 @@ public class GePasswordActivity extends Activity implements OnGestureLockViewLis
     GestureLockViewGroup idGestureLockViewGroup;
     @InjectView(R.id.tips)
     TextView tips;
-
+    private UserTableDao mUserDao ;
     private int[] password;
-
+    private UserTable mUser ;
+    public static final String KEY_ACCOUTN="account" ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ge_password);
         ButterKnife.inject(this);
-        idGestureLockViewGroup.setSetting(true);
-        tips.setText(R.string.settingpass);
         idGestureLockViewGroup.setOnGestureLockViewListener(this);
+        mUserDao = DaoManager.getDaoSession().getUserTableDao() ;
+        String account = getIntent().getStringExtra(KEY_ACCOUTN);
+        mUser = mUserDao.load(account);
+        initGePass();
+    }
+    private void initGePass(){
+        if(TextUtils.isEmpty(mUser.getGespassword())){
+            tips.setText(R.string.settingpass);
+            idGestureLockViewGroup.setSetting(true);
+        }else {
+            String passwordString = mUser.getGespassword();
+            String[] p = passwordString.split(",") ;
+            password = new int[p.length] ;
+            for (int i=0;i<p.length;i++){
+                password[i]=Integer.parseInt(p[i]) ;
+            }
+            idGestureLockViewGroup.setAnswer(password);
+            tips.setText(R.string.ge_password);
+            idGestureLockViewGroup.setSetting(false);
+        }
     }
 
 
@@ -67,6 +91,7 @@ public class GePasswordActivity extends Activity implements OnGestureLockViewLis
         if (matched) {
             Intent intent = new Intent(this,MainActivity.class) ;
             startActivity(intent);
+            finish();
         }else {
         }
     }
@@ -87,11 +112,19 @@ public class GePasswordActivity extends Activity implements OnGestureLockViewLis
             tips.setText(R.string.settingpass_again);
         } else {
             if (checkAnswer(pos)) {
-                Toast.makeText(this, "密码设置成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "密码设置成功"+pos.toArray().toString(), Toast.LENGTH_SHORT).show();
                 idGestureLockViewGroup.reset();
                 idGestureLockViewGroup.setAnswer(password);
                 idGestureLockViewGroup.setSetting(false);
                 tips.setText(R.string.ge_password);
+                StringBuilder sb = new StringBuilder();
+                for (int po:password){
+                   sb.append(po).append(",");
+                }
+                mUser.setGespassword(sb.toString());
+                mUserDao.update(mUser);
+                Log.e("GePas",mUser.getGespassword()) ;
+                Log.e("GePas",sb.toString()) ;
             } else {
                 Toast.makeText(this, "密码设置失败,和原密码不同", Toast.LENGTH_SHORT).show();
             }

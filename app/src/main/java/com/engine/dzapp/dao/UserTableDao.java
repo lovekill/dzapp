@@ -25,7 +25,8 @@ public class UserTableDao extends AbstractDao<UserTable, String> {
     public static class Properties {
         public final static Property UserName = new Property(0, String.class, "userName", true, "USER_NAME");
         public final static Property Password = new Property(1, String.class, "password", false, "PASSWORD");
-        public final static Property Time = new Property(2, Long.class, "time", false, "TIME");
+        public final static Property Gespassword = new Property(2, String.class, "gespassword", false, "GESPASSWORD");
+        public final static Property LoginTime = new Property(3, java.util.Date.class, "loginTime", false, "LOGIN_TIME");
     };
 
 
@@ -43,7 +44,8 @@ public class UserTableDao extends AbstractDao<UserTable, String> {
         db.execSQL("CREATE TABLE " + constraint + "'USER_TABLE' (" + //
                 "'USER_NAME' TEXT PRIMARY KEY NOT NULL ," + // 0: userName
                 "'PASSWORD' TEXT," + // 1: password
-                "'TIME' INTEGER);"); // 2: time
+                "'GESPASSWORD' TEXT," + // 2: gespassword
+                "'LOGIN_TIME' INTEGER);"); // 3: loginTime
     }
 
     /** Drops the underlying database table. */
@@ -67,9 +69,14 @@ public class UserTableDao extends AbstractDao<UserTable, String> {
             stmt.bindString(2, password);
         }
  
-        Long time = entity.getTime();
-        if (time != null) {
-            stmt.bindLong(3, time);
+        String gespassword = entity.getGespassword();
+        if (gespassword != null) {
+            stmt.bindString(3, gespassword);
+        }
+ 
+        java.util.Date loginTime = entity.getLoginTime();
+        if (loginTime != null) {
+            stmt.bindLong(4, loginTime.getTime());
         }
     }
 
@@ -85,7 +92,8 @@ public class UserTableDao extends AbstractDao<UserTable, String> {
         UserTable entity = new UserTable( //
             cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // userName
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // password
-            cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2) // time
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // gespassword
+            cursor.isNull(offset + 3) ? null : new java.util.Date(cursor.getLong(offset + 3)) // loginTime
         );
         return entity;
     }
@@ -95,7 +103,8 @@ public class UserTableDao extends AbstractDao<UserTable, String> {
     public void readEntity(Cursor cursor, UserTable entity, int offset) {
         entity.setUserName(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
         entity.setPassword(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setTime(cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2));
+        entity.setGespassword(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setLoginTime(cursor.isNull(offset + 3) ? null : new java.util.Date(cursor.getLong(offset + 3)));
      }
     
     /** @inheritdoc */
