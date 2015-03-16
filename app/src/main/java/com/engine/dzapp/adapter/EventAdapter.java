@@ -1,6 +1,7 @@
 package com.engine.dzapp.adapter;
 
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,18 +25,21 @@ public class EventAdapter extends DZAdapter<Event> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Event event = getItem(position);
-        ViewHolder holder = null ;
-        if(convertView==null) {
-            convertView=LayoutInflater.from(mContext).inflate(R.layout.item_event, null, false);
-            holder = new ViewHolder(convertView) ;
+        ViewHolder holder = null;
+        if (convertView == null) {
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_event, null, false);
+            holder = new ViewHolder(convertView);
             convertView.setTag(holder);
-        }else {
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.eventName.setText(event.getEventName());
-        holder.eventTime.setText(android.text.format.DateFormat.format("MM/dd/yyyy h:mmaa", event.getTime()));
-        if(event.getEventType()== AddEventFragment.EVENT){
+        holder.eventTime.setText(DateFormat.format("MM/dd/yyyy h:mmaa", event.getTime()));
+        if (event.getEventType() == AddEventFragment.EVENT) {
             holder.type.setText("[事件/待办]");
+        }
+        if(event.getStatus()==0){
+           holder.status.setText("未开始");
         }
         return convertView;
     }
@@ -46,11 +50,16 @@ public class EventAdapter extends DZAdapter<Event> {
      *
      * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
      */
-    static class ViewHolder {
+    static
+
+
+    class ViewHolder {
         @InjectView(R.id.type)
         TextView type;
         @InjectView(R.id.eventName)
         TextView eventName;
+        @InjectView(R.id.status)
+        TextView status;
         @InjectView(R.id.eventTime)
         TextView eventTime;
 
